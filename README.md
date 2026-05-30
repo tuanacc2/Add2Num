@@ -66,17 +66,12 @@ Máy tính đã cài đặt JDK 17 hoặc JDK 21.
 
 Mở Terminal tại thư mục gốc của dự án và chạy các lệnh sau:
 
-- **Bước 1:** Biên dịch và cài đặt file JAR thư viện ngoài cục bộ (Nếu có)
-
-```bash
-mvn install:install-file -Dfile=mybignumber.jar -DgroupId=com.mybignumber -DartifactId=lib -Dversion=1.0.0 -Dpackaging=jar
-```
-- **Bước 2:** Biên dịch ứng dụng
+- **Bước 1:** Biên dịch ứng dụng
 
 ```bash
 ./mvnw clean package -DskipTests
 ```
-- **Bước 3:** Chạy ứng dụng
+- **Bước 2:** Chạy ứng dụng
 ```bash
 ./mvnw spring-boot:run
 ```
