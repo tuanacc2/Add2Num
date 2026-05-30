@@ -21,12 +21,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.example.mybignumber</groupId>
-            <artifactId>mybignumber-core</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.mybignumber</groupId>
             <artifactId>lib</artifactId>
             <version>1.0.0</version>
