@@ -27,6 +27,14 @@
         </dependency>
 
         <dependency>
+            <groupId>com.mybignumber</groupId>
+            <artifactId>lib</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/mybignumber-core-0.0.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
