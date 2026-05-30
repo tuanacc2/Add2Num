@@ -81,3 +81,13 @@ Thêm cấu hình nạp thư viện từ hệ thống cục bộ:
     </configuration>
 </plugin>
 ```
+
+# Tự biên dịch file jar 
+
+Mở Terminal tại thư mục gốc của dự án và chạy lệnh sau để tự biên dịch.
+
+```bash
+./mvnw clean package -DskipTests
+```
+
+File `mybignumber-core-0.0.1.jar` sẽ xuất hiện trong thư mục `\target`.
