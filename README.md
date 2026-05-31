@@ -64,9 +64,9 @@ Thêm cấu hình nạp thư viện từ hệ thống cục bộ:
 <dependency>
     <groupId>com.mybignumber</groupId>
     <artifactId>lib</artifactId>
-    <version>1.0.0</version>
+    <version>0.0.1</version>
     <scope>system</scope>
-    <systemPath>${project.basedir}/libs/mybignumber.jar</systemPath>
+    <systemPath>${project.basedir}/libs/mybignumber-core-0.0.1.jar</systemPath>
 </dependency>
 ```
 
