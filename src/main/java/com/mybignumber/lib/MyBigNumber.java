@@ -13,7 +13,7 @@ public class MyBigNumber {
             throw new IllegalArgumentException("Đầu vào phải là chuỗi ký số hợp lệ và không rỗng.");
         }
 
-        // Tạo mảng chứa kết quả, kích thước tối đa là độ dài lớn nhất + 1 (phòng trường hợp có số nhớ cuối cùng)
+        // Tạo mảng chứa kết quả, kích thước tối đa là độ dài lớn nhất + 1
         char[] result = new char[Math.max(stn1.length(), stn2.length()) + 1];
         int n1idx = stn1.length() - 1;
         int n2idx = stn2.length() - 1;
@@ -34,17 +34,19 @@ public class MyBigNumber {
         }
 
         if (has_carry) {
-            result[0] = '1';
+            result[rIdx--] = '1';
         }
 
-        int startIndex = rIdx + 1;
+        int startIndex = rIdx + 1; // Vị trí bắt đầu của kết quả thực tế trong mảng
         
-        // Loại bỏ các số 0 ở đầu, nhưng giữ lại nếu kết quả là "0"
+        // Xóa các số '0' đầu tiên, nhưng phải dừng lại trước ô cuối cùng để đề phòng kết quả bằng "0"
         while (startIndex < result.length - 1 && result[startIndex] == '0') {
             startIndex++;
         }
         
+        String finalResult = new String(result, startIndex, result.length - startIndex);
+
         logger.info("Tính toán thành công.");
-        return new String(result, startIndex, result.length - startIndex);
+        return finalResult;
     }
 }
