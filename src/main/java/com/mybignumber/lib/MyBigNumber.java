@@ -6,90 +6,42 @@ import org.slf4j.LoggerFactory;
 public class MyBigNumber {
     private static final Logger logger = LoggerFactory.getLogger(MyBigNumber.class);
     
-    /**
-     * Trả về hàng đơn vị cho tổng hai ký tự số (13 -> 3).
-     * @param stn1 Ký tự số thứ nhất
-     * @param stn2 Ký tự số thứ hai
-     * @return Hàng đơn vị của kết quả phép cộng
-     */
-    private static char add(char c1, char c2) {
-        if (Character.isDigit(c1) && Character.isDigit(c2)) {
-            int value = c2 - '0'; 
-            char result = (char)(c1 + value > '9' ? (c1 + value) % 10 : c1 + value);
-            return result;
-        }
-        return '0';
-    }
-
-    /**
-     * Trả lại biến trạng thái nếu tổng hai ký tự số lớn hơn 9 (3 + 9  = 12 -> true | 4 + 3 = 7 -> false).
-     * @param stn1 Ký tự số thứ nhất
-     * @param stn2 Ký tự số thứ hai
-     * @return Trạng thái của tổng hai ký tự số
-     */
-    private static boolean leftover(char c1, char c2) {
-        if (Character.isDigit(c1) && Character.isDigit(c2) && ((c1  - '0') + (c2  - '0') > 9)) {
-            return true;
-        }
-        return false;
-    }
- 
-    /**
-     * Tính tổng của hai số nguyên lớn dưới dạng chuỗi.
-     * @param stn1 Số thứ nhất (chuỗi ký số)
-     * @param stn2 Số thứ hai (chuỗi ký số)
-     * @return Chuỗi kết quả phép cộng
-     */
     public static String sum(String stn1, String stn2) {
-        logger.info("Đang tính tổng của {} và {}", stn1, stn2);
+        logger.info("Đang tính tổng của hai số có độ dài {} và {}", stn1, stn2);
 
-        StringBuilder result = new StringBuilder(); 
-        int i = stn1.length() - 1;
-        int j = stn2.length() - 1;
-        int idx = 0;
-        boolean carry = false;
+        if (stn1 == null || stn2 == null || !stn1.matches("\\d+") || !stn2.matches("\\d+")) {
+            throw new IllegalArgumentException("Đầu vào phải là chuỗi ký số hợp lệ và không rỗng.");
+        }
 
-        while (i >= 0 || j >= 0 || carry) {
-            char c1 = '0'; char c2 = '0';
+        char[] result = new char[Math.max(stn1.length(), stn2.length()) + 1]; // +1 cho trường hợp có số nhớ cuối cùng
+        int n1idx = stn1.length() - 1;
+        int n2idx = stn2.length() - 1;
+        int rIdx = result.length - 1;   // Index của chữ số đang tính, bắt đầu từ cuối chuỗi
+        boolean has_carry = false;
+        int digit1, digit2, total;
 
-            if (i >= 0) {
-                c1 = stn1.charAt(i);
-                i--;
+        while (n1idx >= 0 || n2idx >= 0) {
+            digit1 = (n1idx >= 0) ? stn1.charAt(n1idx--) - '0' : 0;
+            digit2 = (n2idx >= 0) ? stn2.charAt(n2idx--) - '0' : 0;
+
+            total = digit1 + digit2 + (has_carry ? 1 : 0);
+            has_carry = total > 9;
+
+            result[rIdx--] = (char)(total % 10 + '0');
+
+            if (logger.isDebugEnabled()) {
+                logger.info("Tính toán hàng hiện tại: kết quả tạm thời = {}", has_carry ? "1" + new String(result) : new String(result));
             }
+        }
 
-            if (j >= 0) {
-                c2 = stn2.charAt(j);
-                j--;
-            }
-
-            char new_c = add(c1, c2);
-            boolean flag = leftover(c1, c2);
-            
-            if (carry) {
-                flag = flag || leftover(new_c, '1');
-                new_c = add(new_c, '1');
-            }
-
-            carry = flag;
-
-            if (result.length() <= idx) {
-                result.insert(0, new_c);
-
-                if (carry) {
-                    result.insert(0, '1');
-                }
-            } else {
-                result.replace(0, 1, "" + new_c);
-                if (carry) {
-                    result.insert(0, '1');
-                }
-            }
-
-            idx++;
-            logger.info("Tính toán hàng hiện tại: kết quả tạm thời = {}", result);
+        if (has_carry) {
+            result[0] = '1';
         }
         
-        logger.info("Kết quả cuối cùng: {}", result);
-        return result.toString();
+        // Loại bỏ các dấu cách ở trong kết quả
+        // Loại bỏ các số 0 ở đầu, nhưng giữ lại nếu kết quả là "0"
+        String finalResult = new String(result).trim().replaceFirst("^0+(?!$)", ""); 
+        logger.info("Tính toán thành công.");
+        return finalResult;
     }
 }
