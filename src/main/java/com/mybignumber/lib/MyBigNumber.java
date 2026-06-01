@@ -6,17 +6,29 @@ import org.slf4j.LoggerFactory;
 public class MyBigNumber {
     private static final Logger logger = LoggerFactory.getLogger(MyBigNumber.class);
     
+    /**
+     * Trả về hàng đơn vị cho tổng hai ký tự số (13 -> 3).
+     * @param stn1 Ký tự số thứ nhất
+     * @param stn2 Ký tự số thứ hai
+     * @return Hàng đơn vị của kết quả phép cộng
+     */
     private static char add(char c1, char c2) {
         if (Character.isDigit(c1) && Character.isDigit(c2)) {
-            int value = c2 - 48;    // '0' = 48 ASCII
-            char result = (char)(c1 + value > 57 ? c1 + value - 10 : c1 + value);
+            int value = c2 - '0'; 
+            char result = (char)(c1 + value > '9' ? (c1 + value) % 10 : c1 + value);
             return result;
         }
         return '0';
     }
 
+    /**
+     * Trả lại biến trạng thái nếu tổng hai ký tự số lớn hơn 9 (3 + 9  = 12 -> true | 4 + 3 = 7 -> false).
+     * @param stn1 Ký tự số thứ nhất
+     * @param stn2 Ký tự số thứ hai
+     * @return Trạng thái của tổng hai ký tự số
+     */
     private static boolean leftover(char c1, char c2) {
-        if (Character.isDigit(c1) && Character.isDigit(c2) && (c1 + c2 - 96 > 9)) {
+        if (Character.isDigit(c1) && Character.isDigit(c2) && ((c1  - '0') + (c2  - '0') > 9)) {
             return true;
         }
         return false;
